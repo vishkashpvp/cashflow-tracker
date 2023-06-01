@@ -1,0 +1,5 @@
+# Env Files
+.env
+
+# Http 
+rest.http
