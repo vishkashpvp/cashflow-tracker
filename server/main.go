@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/vishkashpvp/cashflow-tracker/server/handlers"
 )
 
 func init() {
@@ -40,6 +41,8 @@ func main() {
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, Go!"})
 	})
+
+	r.POST("/signin", handlers.SignIn)
 
 	r.Run(":8080")
 }
