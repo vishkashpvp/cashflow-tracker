@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
 	"github.com/vishkashpvp/cashflow-tracker/server/handlers"
 )
 
@@ -20,7 +21,7 @@ func init() {
 func main() {
 	r := gin.Default()
 
-	client, err := ConnectToMongoDB()
+	client, err := mongodb.ConnectToMongoDB()
 	if err != nil {
 		log.Println("Connection to MongoDB failed:", err)
 	}
@@ -41,8 +42,9 @@ func main() {
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, Go!"})
 	})
-
+	r.POST("/signup", handlers.SignUp)
 	r.POST("/signin", handlers.SignIn)
+	r.GET("/user/all", handlers.GetAllUsers)
 
 	r.Run(":8080")
 }

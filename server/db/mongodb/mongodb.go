@@ -1,4 +1,4 @@
-package main
+package mongodb
 
 import (
 	"context"
@@ -49,4 +49,25 @@ func ConnectToMongoDB() (*mongo.Client, error) {
 	log.Println("Connected to MongoDB")
 
 	return client, nil
+}
+
+// GetAppDatabase returns pointer to the MongoDB database instance for the application.
+//
+// Example:
+//
+//	db := GetAppDatabase()
+//	// Use the database for further operations.
+func GetAppDatabase() *mongo.Database {
+	dbName := os.Getenv("MONGODB_APPDB")
+	return client.Database(dbName)
+}
+
+// GetUsersCollection returns pointer the MongoDB collection instance within the application's database.
+//
+// Example:
+//
+//	usersColl := GetUsersCollection()
+//	// Use the collection for further operations.
+func GetUsersCollection() *mongo.Collection {
+	return GetAppDatabase().Collection("users")
 }
