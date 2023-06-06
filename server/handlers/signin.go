@@ -6,10 +6,13 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
 	"github.com/vishkashpvp/cashflow-tracker/server/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"google.golang.org/api/idtoken"
 )
 
@@ -36,7 +39,13 @@ func SignUp(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusCreated, gin.H{"user": user, "id": createdId})
+		token, err := GenerateJWT(createdId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusCreated, gin.H{"token": token, "user": user})
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Unknown provider '" + provider + "'"})
 	}
@@ -64,7 +73,13 @@ func SignIn(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"user": user})
+		token, err := GenerateJWT(user.ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"token": token, "user": user})
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Unknown provider '" + provider + "'"})
 	}
@@ -91,4 +106,28 @@ func GoogleUserInfo(idToken string) (*models.User, error) {
 	}
 
 	return user, nil
+}
+
+// GenerateJWT generates a JSON Web Token (JWT) using the provided user ID.
+// It returns jwt token or error if any.
+func GenerateJWT(id primitive.ObjectID) (string, error) {
+	secretKey := os.Getenv("JWT_SECRET_KEY")
+	if secretKey == "" {
+		return "", errors.New("secret key not found")
+	}
+
+	secretKeyBytes := []byte(secretKey)
+	claims := jwt.MapClaims{
+		"sub": id,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
+		"id":  id,
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	signedToken, err := token.SignedString(secretKeyBytes)
+	if err != nil {
+		return "", err
+	}
+
+	return signedToken, nil
 }
