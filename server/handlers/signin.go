@@ -57,6 +57,13 @@ func SignIn(c *gin.Context) {
 			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 			return
 		}
+
+		user, statusCode, err := mongodb.FindUserByEmail(user.Email)
+		if err != nil {
+			c.JSON(statusCode, gin.H{"message": err.Error()})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{"user": user})
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Unknown provider '" + provider + "'"})

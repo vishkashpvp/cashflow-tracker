@@ -9,6 +9,7 @@ import (
 	"github.com/vishkashpvp/cashflow-tracker/server/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -78,6 +79,33 @@ func CreateUser(user *models.User) (primitive.ObjectID, int, error) {
 	}
 
 	return insertedId, http.StatusCreated, nil
+}
+
+// FindUserByEmail retrieves a user from the database based on their email address.
+//
+// It returns pointer to the user, status code, and error.
+//
+// If a user with the provided email is found, the user is returned with status code 200 and a nil error.
+//
+// If no user is found with the provided email, the user is nil, status code is 404,
+// and the error is set to mongo.ErrNoDocuments.
+//
+// For other errors during the query, the user is nil, status code is 500,
+// and the error contains the specific error message.
+func FindUserByEmail(email string) (*models.User, int, error) {
+	usersColl := GetUsersCollection()
+	filter := bson.M{"email": email}
+
+	var user models.User
+	err := usersColl.FindOne(context.Background(), filter).Decode(&user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, http.StatusNotFound, err
+		}
+		return nil, http.StatusInternalServerError, err
+	}
+
+	return &user, http.StatusOK, nil
 }
 
 // IsEmailExists checks if an email already exists in the database.
