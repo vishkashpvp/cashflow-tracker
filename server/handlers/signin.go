@@ -67,10 +67,23 @@ func SignIn(c *gin.Context) {
 			return
 		}
 
+		userCopy := *user
 		user, statusCode, err := mongodb.FindUserByEmail(user.Email)
-		if err != nil {
+		if err != nil && statusCode != http.StatusNotFound {
 			c.JSON(statusCode, gin.H{"message": err.Error()})
 			return
+		}
+		respStatus := http.StatusOK
+		if statusCode == http.StatusNotFound {
+			user = &userCopy
+			createdId, statusCode, err := mongodb.CreateUser(user)
+			if err != nil {
+				c.JSON(statusCode, gin.H{"message": err.Error()})
+				return
+			}
+
+			user.ID = createdId
+			respStatus = http.StatusCreated
 		}
 
 		token, err := GenerateJWT(user.ID)
@@ -79,7 +92,7 @@ func SignIn(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"token": token, "user": user})
+		c.JSON(respStatus, gin.H{"token": token, "user": user})
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Unknown provider '" + provider + "'"})
 	}
