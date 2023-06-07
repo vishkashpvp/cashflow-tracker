@@ -1,0 +1,19 @@
+<asl-google-signin-button
+  *ngIf="!loggedIn"
+  text="continue_with"
+  type="standard"
+  width="250"
+  size="large"
+  theme="outline"
+  shape="circle"
+></asl-google-signin-button>
+
+<div *ngIf="loggedIn">
+  <img [src]="user.photoUrl" referrerpolicy="no-referrer" />
+  <div>
+    <h3>Hi! {{ user.name }}</h3>
+    <p>{{ user.email }}</p>
+  </div>
+</div>
+
+<div *ngIf="!loggedIn && xError">failed to fetch user details</div>
