@@ -16,10 +16,6 @@ import (
 	"google.golang.org/api/idtoken"
 )
 
-// SignIn handles the user signin functionality.
-//
-// It validates the idToken based on the provider('X-Provider' header) and constructs a response with the user information.
-// If any error occurs during validation or construction, it returns an appropriate error response.
 func SignIn(c *gin.Context) {
 	idToken := c.Request.Header.Get("X-IdToken")
 	provider := strings.ToUpper(c.Request.Header.Get("X-Provider"))
@@ -63,8 +59,6 @@ func SignIn(c *gin.Context) {
 	}
 }
 
-// GoogleUserInfo validates idToken and retrieves user info from provided idToken.
-// It returns a *models.User and an error, if any.
 func GoogleUserInfo(idToken string) (*models.User, error) {
 	clientId := os.Getenv("G_CLOUD_CLIENT_ID")
 	if clientId == "" {
@@ -86,8 +80,6 @@ func GoogleUserInfo(idToken string) (*models.User, error) {
 	return user, nil
 }
 
-// GenerateJWT generates a JSON Web Token (JWT) using the provided user ID.
-// It returns jwt token or error if any.
 func GenerateJWT(id primitive.ObjectID) (string, error) {
 	secretKey := os.Getenv("JWT_SECRET_KEY")
 	if secretKey == "" {

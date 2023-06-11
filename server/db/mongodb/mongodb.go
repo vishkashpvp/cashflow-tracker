@@ -13,8 +13,6 @@ const LOCAL_MONGO string = "mongodb://localhost:27017"
 
 var client *mongo.Client
 
-// ConnectToMongoDB establishes a connection to a MongoDB database.
-// It returns a *mongo.Client instance and an error, if any.
 func ConnectToMongoDB() (*mongo.Client, error) {
 	if client != nil {
 		return client, nil
@@ -51,23 +49,11 @@ func ConnectToMongoDB() (*mongo.Client, error) {
 	return client, nil
 }
 
-// GetAppDatabase returns pointer to the MongoDB database instance for the application.
-//
-// Example:
-//
-//	db := GetAppDatabase()
-//	// Use the database for further operations.
 func GetAppDatabase() *mongo.Database {
 	dbName := os.Getenv("MONGODB_APPDB")
 	return client.Database(dbName)
 }
 
-// GetUsersCollection returns pointer the MongoDB collection instance within the application's database.
-//
-// Example:
-//
-//	usersColl := GetUsersCollection()
-//	// Use the collection for further operations.
 func GetUsersCollection() *mongo.Collection {
 	return GetAppDatabase().Collection("users")
 }
