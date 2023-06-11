@@ -42,7 +42,6 @@ func main() {
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, Go!"})
 	})
-	r.POST("/signup", handlers.SignUp)
 	r.POST("/signin", handlers.SignIn)
 	r.GET("/user/all", handlers.GetAllUsers)
 

@@ -16,41 +16,6 @@ import (
 	"google.golang.org/api/idtoken"
 )
 
-// SignUp handles the user signup functionality.
-//
-// Based on provider(X-Provider) and idToken(X-IdToken), it calls respective function and constructs user information.
-// Then, it creates a new user in the MongoDB.
-// It returns the created user and Id in the response if successful, or an appropriate error message if there was an error.
-func SignUp(c *gin.Context) {
-	idToken := c.Request.Header.Get("X-IdToken")
-	provider := strings.ToUpper(c.Request.Header.Get("X-Provider"))
-
-	switch provider {
-	case "GOOGLE":
-		user, err := GoogleUserInfo(idToken)
-		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
-			return
-		}
-
-		createdId, statusCode, err := mongodb.CreateUser(user)
-		if err != nil {
-			c.JSON(statusCode, gin.H{"message": err.Error()})
-			return
-		}
-
-		token, err := GenerateJWT(createdId)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
-			return
-		}
-
-		c.JSON(http.StatusCreated, gin.H{"token": token, "user": user})
-	default:
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Unknown provider '" + provider + "'"})
-	}
-}
-
 // SignIn handles the user signin functionality.
 //
 // It validates the idToken based on the provider('X-Provider' header) and constructs a response with the user information.
