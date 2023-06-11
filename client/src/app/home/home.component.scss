@@ -1,0 +1,27 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  font-size: 75px;
+  font-weight: 400;
+  word-break: break-word;
+  line-height: 70px;
+}
+
+.description {
+  font-size: 25px;
+  font-weight: 100;
+  margin-top: 12px;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}

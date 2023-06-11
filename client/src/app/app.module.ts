@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 import { environment } from 'src/environments/environment';
 
@@ -36,7 +37,7 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, SigninComponent, HeaderComponent],
+  declarations: [AppComponent, SigninComponent, HeaderComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
