@@ -4,7 +4,10 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
@@ -20,6 +23,8 @@ func init() {
 
 func main() {
 	r := gin.Default()
+
+	r.Use(cors.New(getCorsConfig()))
 
 	client, err := mongodb.ConnectToMongoDB()
 	if err != nil {
@@ -46,4 +51,15 @@ func main() {
 	r.GET("/user/all", handlers.GetAllUsers)
 
 	r.Run(":8080")
+}
+
+func getCorsConfig() cors.Config {
+	allowedOriginsStr := os.Getenv("ALLOWED_ORIGINS")
+	allowedOrigins := strings.Split(allowedOriginsStr, ",")
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = allowedOrigins
+	config.AllowHeaders = append(config.AllowHeaders, "x-idtoken", "x-provider")
+
+	return config
 }
