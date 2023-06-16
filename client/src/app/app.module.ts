@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +46,7 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
     SocialLoginModule,
     GoogleSigninButtonModule,
     BrowserAnimationsModule,
+    MatIconModule,
   ],
   providers: [
     {

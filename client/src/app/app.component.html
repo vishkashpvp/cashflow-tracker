@@ -1,1 +1,12 @@
 <app-home></app-home>
+
+<button
+  class="fixed flex p-3 text-white rounded-full shadow right-4 top-4"
+  [ngClass]="{
+    'bg-gray-500': isDarkTheme,
+    'bg-violet-500': !isDarkTheme
+  }"
+  (click)="toggleTheme()"
+>
+  <mat-icon [fontIcon]="isDarkTheme ? 'dark_mode' : 'light_mode'"></mat-icon>
+</button>
