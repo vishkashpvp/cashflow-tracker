@@ -13,6 +13,7 @@ module.exports = {
       yellow: colors.yellow,
       purple: colors.purple,
       green: colors.green,
+      blue: colors.blue,
       vs: "#242424",
     },
     extend: {

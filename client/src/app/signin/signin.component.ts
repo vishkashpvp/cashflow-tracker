@@ -1,4 +1,8 @@
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import {
+  FacebookLoginProvider,
+  SocialAuthService,
+  SocialUser,
+} from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './signin.service';
 
@@ -22,6 +26,8 @@ export class SigninComponent implements OnInit {
       this.user = user;
       if (user == null) {
         this.loggedIn = false;
+      } else if (!user.email) {
+        console.error('no email provided');
       } else {
         this.signin(user.idToken, user.provider);
       }
@@ -43,5 +49,9 @@ export class SigninComponent implements OnInit {
         this.xError = true;
       },
     });
+  }
+
+  signInWithFB() {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 }

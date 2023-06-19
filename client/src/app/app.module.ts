@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 
 // External
 import {
+  FacebookLoginProvider,
   GoogleLoginProvider,
   GoogleSigninButtonModule,
   SocialAuthServiceConfig,
@@ -28,10 +29,18 @@ const GOOGLE = {
   id: GoogleLoginProvider.PROVIDER_ID,
   provider: new GoogleLoginProvider(environment.G_CLIENT_ID),
 };
+const FACEBOOK = {
+  id: FacebookLoginProvider.PROVIDER_ID,
+  provider: new FacebookLoginProvider(environment.FB_CLIENT_ID, {
+    scope: 'email',
+    return_scopes: true,
+    enable_profile_selector: true,
+  }),
+};
 
 const socialAuthServiceConfig: SocialAuthServiceConfig = {
   autoLogin: false,
-  providers: [GOOGLE],
+  providers: [GOOGLE, FACEBOOK],
   onError: (err) => {
     console.error(err);
   },
