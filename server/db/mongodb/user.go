@@ -52,14 +52,6 @@ func CreateUser(user *models.User) (primitive.ObjectID, int, error) {
 	user.UpdatedAt = time.Now()
 	user.ID = primitive.NewObjectID()
 
-	emailExists, err := IsEmailExists(user.Email)
-	if err != nil {
-		return primitive.NilObjectID, http.StatusInternalServerError, err
-	}
-	if emailExists {
-		return primitive.NilObjectID, http.StatusConflict, errors.New("email already exists")
-	}
-
 	resp, err := usersColl.InsertOne(context.Background(), user)
 	if err != nil {
 		return primitive.NilObjectID, http.StatusInternalServerError, err
@@ -76,6 +68,22 @@ func CreateUser(user *models.User) (primitive.ObjectID, int, error) {
 func FindUserByEmail(email string) (*models.User, int, error) {
 	usersColl := GetUsersCollection()
 	filter := bson.M{"email": email}
+
+	var user models.User
+	err := usersColl.FindOne(context.Background(), filter).Decode(&user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, http.StatusNotFound, err
+		}
+		return nil, http.StatusInternalServerError, err
+	}
+
+	return &user, http.StatusOK, nil
+}
+
+func FindUserByProviderID(provider, provider_id string) (*models.User, int, error) {
+	usersColl := GetUsersCollection()
+	filter := bson.M{"provider": provider, "provider_id": provider_id}
 
 	var user models.User
 	err := usersColl.FindOne(context.Background(), filter).Decode(&user)

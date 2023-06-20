@@ -59,7 +59,7 @@ func getCorsConfig() cors.Config {
 
 	config := cors.DefaultConfig()
 	config.AllowOrigins = allowedOrigins
-	config.AllowHeaders = append(config.AllowHeaders, "x-idtoken", "x-provider")
+	config.AllowHeaders = append(config.AllowHeaders, "x-idtoken", "x-provider", "x-accesstoken")
 
 	return config
 }
