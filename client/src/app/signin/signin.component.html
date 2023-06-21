@@ -1,23 +1,24 @@
-<asl-google-signin-button
-  *ngIf="!loggedIn"
-  text="continue_with"
-  type="standard"
-  width="250"
-  size="large"
-  theme="outline"
-  shape="circle"
-></asl-google-signin-button>
+<div *ngIf="!loggedIn">
+  <asl-google-signin-button
+    text="continue_with"
+    type="standard"
+    width="250"
+    size="large"
+    theme="outline"
+    shape="circle"
+  ></asl-google-signin-button>
 
-<button
-  style="width: 250px"
-  class="flex mt-1 items-center text-sm font-normal text-white bg-blue-500 border border-blue-600 p-1.5 rounded-full"
-  (click)="signInWithFB()"
->
-  <img src="assets/facebook.svg" alt="facebook svg" />
-  <span style="font-size: 13px" class="ml-6 font-medium">
-    Continue with Facebook
-  </span>
-</button>
+  <button
+    style="width: 250px"
+    class="flex mt-1 items-center text-sm font-normal text-white bg-blue-500 border border-blue-600 p-1.5 rounded-full"
+    (click)="signInWithFB()"
+  >
+    <img src="assets/facebook.svg" alt="facebook svg" />
+    <span style="font-size: 13px" class="ml-6 font-medium">
+      Continue with Facebook
+    </span>
+  </button>
+</div>
 
 <div *ngIf="loggedIn">
   <img [src]="user.photoUrl" referrerpolicy="no-referrer" />
