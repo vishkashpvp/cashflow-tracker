@@ -8,14 +8,15 @@ import { environment } from 'src/environments/environment';
 export class SigninService {
   constructor(private http: HttpClient) {}
 
-  signin(idToken: string, provider: string) {
+  signin(provider: string, idToken: string, accessToken: string) {
     return this.http.post(
       `${environment.API_URL}/signin`,
       {},
       {
         headers: {
-          'X-IdToken': idToken,
           'X-Provider': provider,
+          'X-IdToken': idToken,
+          'X-AccessToken': accessToken,
         },
         observe: 'response',
       }

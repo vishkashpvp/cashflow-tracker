@@ -6,6 +6,11 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './signin.service';
 
+enum LoginProvider {
+  GOOGLE = 'GOOGLE',
+  FACEBOOK = 'FACEBOOK',
+}
+
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -24,18 +29,26 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.user = user;
-      if (user == null) {
-        this.loggedIn = false;
-      } else if (!user.email) {
-        console.error('no email provided');
-      } else {
-        this.signin(user.idToken, user.provider);
+
+      if (!user) this.loggedIn = false;
+
+      switch (user.provider.toUpperCase()) {
+        case LoginProvider.GOOGLE:
+          this.signin(LoginProvider.GOOGLE, user.idToken, '');
+          break;
+        case LoginProvider.FACEBOOK:
+          this.signin(LoginProvider.FACEBOOK, '', user.authToken);
+          break;
+        default:
+          this.loggedIn = false;
+          console.error('no such provider: ', user.provider);
+          break;
       }
     });
   }
 
-  signin(idToken: string, provider: string) {
-    this.service.signin(idToken, provider).subscribe({
+  signin(provider: string, idToken: string, accessToken: string) {
+    this.service.signin(provider, idToken, accessToken).subscribe({
       next: (val: any) => {
         console.log('val :>> ', val);
         console.log('user :>> ', val.body.user);
