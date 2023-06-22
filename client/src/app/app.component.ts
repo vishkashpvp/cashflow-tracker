@@ -1,4 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
+import { Theme } from './enum/theme';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +12,26 @@ export class AppComponent {
   isDarkTheme: boolean = false;
   html: HTMLElement;
 
-  constructor(private render: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private localStorageService: LocalStorageService
+  ) {
     this.html = document.documentElement;
-    this.render.removeClass(this.html, 'dark');
+    this.isDarkTheme = this.localStorageService.getTheme() === Theme.DARK;
+    this.applyTheme();
   }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
+    this.applyTheme();
+    this.localStorageService.setTheme(
+      this.isDarkTheme ? Theme.DARK : Theme.LIGHT
+    );
+  }
 
+  applyTheme() {
     this.isDarkTheme
-      ? this.render.addClass(this.html, 'dark')
-      : this.render.removeClass(this.html, 'dark');
+      ? this.renderer.addClass(this.html, Theme.DARK)
+      : this.renderer.removeClass(this.html, Theme.DARK);
   }
 }
