@@ -4,14 +4,13 @@ import (
 	"context"
 	"log"
 	"net/http"
-	"os"
-	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
 	"github.com/vishkashpvp/cashflow-tracker/server/handlers"
+	"github.com/vishkashpvp/cashflow-tracker/server/utils"
 )
 
 func init() {
@@ -24,7 +23,8 @@ func init() {
 func main() {
 	r := gin.Default()
 
-	r.Use(cors.New(getCorsConfig()))
+	corsConfig := utils.GetCorsConfig()
+	r.Use(cors.New(corsConfig))
 
 	client, err := mongodb.ConnectToMongoDB()
 	if err != nil {
@@ -33,7 +33,7 @@ func main() {
 
 	r.Use(func(c *gin.Context) {
 		if client == nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to the database"})
+			c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to connect to the database"})
 			c.Abort()
 			return
 		}
@@ -51,15 +51,4 @@ func main() {
 	r.GET("/user/all", handlers.GetAllUsers)
 
 	r.Run(":8080")
-}
-
-func getCorsConfig() cors.Config {
-	allowedOriginsStr := os.Getenv("ALLOWED_ORIGINS")
-	allowedOrigins := strings.Split(allowedOriginsStr, ",")
-
-	config := cors.DefaultConfig()
-	config.AllowOrigins = allowedOrigins
-	config.AllowHeaders = append(config.AllowHeaders, "x-idtoken", "x-provider", "x-accesstoken")
-
-	return config
 }
