@@ -65,6 +65,23 @@ func CreateUser(user *models.User) (primitive.ObjectID, int, error) {
 	return insertedId, http.StatusCreated, nil
 }
 
+func FindUserByID(id primitive.ObjectID) (*models.User, int, error) {
+	usersColl := GetUsersCollection()
+
+	filter := bson.M{"_id": id}
+	user := &models.User{}
+
+	err := usersColl.FindOne(context.Background(), filter).Decode(user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, http.StatusNotFound, errors.New("no user with the given id")
+		}
+		return nil, http.StatusInternalServerError, err
+	}
+
+	return user, http.StatusOK, nil
+}
+
 func FindUserByEmail(email string) (*models.User, int, error) {
 	usersColl := GetUsersCollection()
 	filter := bson.M{"email": email}

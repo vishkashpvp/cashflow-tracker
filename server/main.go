@@ -49,6 +49,7 @@ func main() {
 	})
 	r.POST("/signin", handlers.SignIn)
 	r.GET("/user/all", handlers.GetAllUsers)
+	r.GET("/user/:id", handlers.GetUserByID)
 
 	r.Run(":8080")
 }
