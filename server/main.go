@@ -11,6 +11,7 @@ import (
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
 	"github.com/vishkashpvp/cashflow-tracker/server/handlers"
 	"github.com/vishkashpvp/cashflow-tracker/server/utils"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func init() {
@@ -31,7 +32,24 @@ func main() {
 		log.Println("Connection to MongoDB failed:", err)
 	}
 
-	r.Use(func(c *gin.Context) {
+	r.Use(mongodbMiddleware(client))
+
+	defer client.Disconnect(context.Background())
+
+	r.GET("/ping", pong)
+	r.POST("/auth/signin", handlers.SignIn)
+	r.GET("/user/all", handlers.GetAllUsers)
+	r.GET("/user/:id", handlers.GetUserByID)
+
+	r.Run(":8080")
+}
+
+func pong(c *gin.Context) {
+	c.String(http.StatusOK, "pong")
+}
+
+func mongodbMiddleware(client *mongo.Client) gin.HandlerFunc {
+	return func(c *gin.Context) {
 		if client == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to connect to the database"})
 			c.Abort()
@@ -40,16 +58,5 @@ func main() {
 
 		c.Set("mongoClient", client)
 		c.Next()
-	})
-
-	defer client.Disconnect(context.Background())
-
-	r.GET("/hello", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Hello, Go!"})
-	})
-	r.POST("/signin", handlers.SignIn)
-	r.GET("/user/all", handlers.GetAllUsers)
-	r.GET("/user/:id", handlers.GetUserByID)
-
-	r.Run(":8080")
+	}
 }
