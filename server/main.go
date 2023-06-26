@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
-	"github.com/vishkashpvp/cashflow-tracker/server/handlers"
+	"github.com/vishkashpvp/cashflow-tracker/server/routes"
 	"github.com/vishkashpvp/cashflow-tracker/server/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -36,16 +36,11 @@ func main() {
 
 	defer client.Disconnect(context.Background())
 
-	r.GET("/ping", pong)
-	r.POST("/auth/signin", handlers.SignIn)
-	r.GET("/user/all", handlers.GetAllUsers)
-	r.GET("/user/:id", handlers.GetUserByID)
+	routes.Ping(r)
+	routes.Auth(r)
+	routes.User(r)
 
 	r.Run(":8080")
-}
-
-func pong(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
 }
 
 func mongodbMiddleware(client *mongo.Client) gin.HandlerFunc {
