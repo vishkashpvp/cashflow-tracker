@@ -31,7 +31,7 @@ Web app uses different tech stack based on requirement.
 
 Navigate to client directory and run `npm start` for a dev server for frontend(client) and visit `http://localhost:4200/`.
 
-Navigate to server directory and run `go run main.go` for a dev server for backend(server) and visit `http://localhost:8080/hello`.
+Navigate to server directory and run `go run main.go` or `go run .` for a dev server for backend(server) and visit `http://localhost:8080/ping`.
 
 ### Prerequisites
 
