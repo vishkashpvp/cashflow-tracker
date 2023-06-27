@@ -38,7 +38,7 @@ func main() {
 
 	routes.Ping(r)
 	routes.Auth(r)
-	routes.User(r)
+	routes.Users(r)
 
 	r.Run(":8080")
 }
