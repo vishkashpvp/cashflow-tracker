@@ -3,15 +3,14 @@ package main
 import (
 	"context"
 	"log"
-	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
+	"github.com/vishkashpvp/cashflow-tracker/server/middleware"
 	"github.com/vishkashpvp/cashflow-tracker/server/routes"
 	"github.com/vishkashpvp/cashflow-tracker/server/utils"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func init() {
@@ -32,7 +31,7 @@ func main() {
 		log.Println("Connection to MongoDB failed:", err)
 	}
 
-	r.Use(mongodbMiddleware(client))
+	r.Use(middleware.MongoDBClientCheck(client))
 
 	defer client.Disconnect(context.Background())
 
@@ -41,17 +40,4 @@ func main() {
 	routes.Users(r)
 
 	r.Run(":8080")
-}
-
-func mongodbMiddleware(client *mongo.Client) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if client == nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to connect to the database"})
-			c.Abort()
-			return
-		}
-
-		c.Set("mongoClient", client)
-		c.Next()
-	}
 }
