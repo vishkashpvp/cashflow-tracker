@@ -36,6 +36,9 @@ func main() {
 	defer client.Disconnect(context.Background())
 
 	routes.Ping(r)
+
+	r.Use(middleware.AuthorizeUser())
+
 	routes.Auth(r)
 	routes.Users(r)
 
