@@ -57,3 +57,7 @@ func GetAppDatabase() *mongo.Database {
 func GetUsersCollection() *mongo.Collection {
 	return GetAppDatabase().Collection("users")
 }
+
+func GetTransactionsCollection() *mongo.Collection {
+	return GetAppDatabase().Collection("transactions")
+}
