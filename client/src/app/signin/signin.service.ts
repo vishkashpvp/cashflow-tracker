@@ -10,7 +10,7 @@ export class SigninService {
 
   signin(provider: string, idToken: string, accessToken: string) {
     return this.http.post(
-      `${environment.API_URL}/signin`,
+      `${environment.API_URL}/auth/signin`,
       {},
       {
         headers: {
