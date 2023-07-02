@@ -41,6 +41,7 @@ func main() {
 
 	routes.Auth(r)
 	routes.Users(r)
+	routes.Transactions(r)
 
 	r.Run(":8080")
 }
