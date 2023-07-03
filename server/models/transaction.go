@@ -13,10 +13,10 @@ const (
 
 type Transaction struct {
 	ID            primitive.ObjectID `json:"id" bson:"_id"`
-	UserID        primitive.ObjectID `json:"user_id"`
+	UserID        primitive.ObjectID `json:"userID" bson:"user_id"`
 	Amount        float64            `json:"amount"`
 	Tax           float64            `json:"tax"`
-	PaymentMethod string             `json:"payment_method"`
+	PaymentMethod string             `json:"paymentMethod" bson:"payment_method"`
 	Type          TransactionType    `json:"type"`
 	Category      string             `json:"category"`
 	Description   string             `json:"description"`
