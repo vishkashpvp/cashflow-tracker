@@ -2,12 +2,14 @@ package mongodb
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/vishkashpvp/cashflow-tracker/server/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -56,4 +58,21 @@ func CreateTransaction(transaction *models.Transaction) (*models.Transaction, in
 	}
 
 	return transaction, http.StatusCreated, nil
+}
+
+func FindTransactionByID(id primitive.ObjectID) (*models.Transaction, int, error) {
+	transactionsColl := GetTransactionsCollection()
+
+	filter := bson.M{"_id": id}
+	transaction := &models.Transaction{}
+
+	err := transactionsColl.FindOne(context.Background(), filter).Decode(transaction)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, http.StatusNotFound, errors.New("no transaction with the given id")
+		}
+		return nil, http.StatusInternalServerError, err
+	}
+
+	return transaction, http.StatusOK, nil
 }
