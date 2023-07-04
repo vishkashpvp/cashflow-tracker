@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vishkashpvp/cashflow-tracker/server/models"
+	"github.com/vishkashpvp/cashflow-tracker/server/transform"
 )
 
 func BindAndValidateTransaction() gin.HandlerFunc {
@@ -30,11 +31,22 @@ func BindAndValidateTransaction() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if !transaction.Type.IsValid() {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Transaction type must be either 'earning' or 'spending'"})
+
+		category, err := transform.TransformCategory(transaction.Category)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 			c.Abort()
 			return
 		}
+		transaction.Category = category
+
+		tt, err := transform.TransformTransactionType(transaction.Type)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+			c.Abort()
+			return
+		}
+		transaction.Type = tt
 
 		if transaction.Date.IsZero() {
 			transaction.Date = time.Now().UTC()
