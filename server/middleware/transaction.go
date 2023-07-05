@@ -12,7 +12,9 @@ import (
 
 func BindAndValidateTransaction() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		transaction := &models.Transaction{}
+		transaction := &models.Transaction{
+			Tags: []string{},
+		}
 
 		if err := c.ShouldBindJSON(transaction); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid request body"})
