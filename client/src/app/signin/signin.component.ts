@@ -5,6 +5,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './signin.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 enum LoginProvider {
   GOOGLE = 'GOOGLE',
@@ -23,7 +24,8 @@ export class SigninComponent implements OnInit {
 
   constructor(
     private service: SigninService,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,8 @@ export class SigninComponent implements OnInit {
       next: (val: any) => {
         console.log('val :>> ', val);
         console.log('user :>> ', val.body.user);
+
+        this.localStorageService.setToken(val.body.token);
 
         this.loggedIn = true;
       },
