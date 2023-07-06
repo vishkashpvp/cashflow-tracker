@@ -14,7 +14,9 @@ import { SigninComponent } from './signin/signin.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 
+// Other App Imports
 import { environment } from 'src/environments/environment';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // External
 import {
@@ -58,10 +60,8 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
     MatIconModule,
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: socialAuthServiceConfig,
-    },
+    { provide: 'HTTP_INTERCEPTORS', useClass: AuthInterceptor, multi: true },
+    { provide: 'SocialAuthServiceConfig', useValue: socialAuthServiceConfig },
   ],
   bootstrap: [AppComponent],
 })
