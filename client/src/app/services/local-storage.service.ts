@@ -18,10 +18,10 @@ export class LocalStorageService {
   }
 
   // JWT TOKEN
-  setToken(token: string) {
-    localStorage.setItem(LocalStorageKeys.TOKEN, token);
+  setAuthToken(token: string) {
+    localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, token);
   }
-  getToken(): string | null {
-    return localStorage.getItem(LocalStorageKeys.TOKEN) || null;
+  getAuthToken(): string | null {
+    return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN) || null;
   }
 }

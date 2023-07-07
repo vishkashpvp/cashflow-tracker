@@ -1,4 +1,4 @@
 export const LocalStorageKeys = {
   THEME: '_theme',
-  TOKEN: 'token',
+  AUTH_TOKEN: 'auth_token',
 };

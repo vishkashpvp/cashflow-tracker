@@ -55,7 +55,7 @@ export class SigninComponent implements OnInit {
         console.log('val :>> ', val);
         console.log('user :>> ', val.body.user);
 
-        this.localStorageService.setToken(val.body.token);
+        this.localStorageService.setAuthToken(val.body.token);
 
         this.loggedIn = true;
       },
