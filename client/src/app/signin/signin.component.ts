@@ -6,11 +6,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './signin.service';
 import { LocalStorageService } from '../services/local-storage.service';
-
-enum LoginProvider {
-  GOOGLE = 'GOOGLE',
-  FACEBOOK = 'FACEBOOK',
-}
+import { LoginProvider } from '../enums/LoginProvider';
 
 @Component({
   selector: 'app-signin',

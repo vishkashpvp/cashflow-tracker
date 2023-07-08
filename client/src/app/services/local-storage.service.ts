@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Theme } from '../enum/theme';
+import { Theme } from '../enums/Theme';
 import { LocalStorageKeys } from 'src/constants/LocalStorageKeys';
 
 @Injectable({
