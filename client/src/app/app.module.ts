@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 
 // Other App Imports
@@ -49,7 +48,7 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, SigninComponent, HeaderComponent, HomeComponent],
+  declarations: [AppComponent, SigninComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
