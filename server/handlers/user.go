@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vishkashpvp/cashflow-tracker/server/db/mongodb"
+	"github.com/vishkashpvp/cashflow-tracker/server/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -16,6 +17,12 @@ func GetAllUsers(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"users": users})
+}
+
+func GetUserProfile(c *gin.Context) {
+	userMap, _ := c.Get("user")
+	user, _ := userMap.(*models.User)
+	c.Redirect(http.StatusTemporaryRedirect, "/users/"+user.ID.Hex())
 }
 
 func GetUserByID(c *gin.Context) {
