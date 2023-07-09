@@ -9,5 +9,5 @@ func Users(r *gin.Engine) {
 	users := r.Group("/users")
 
 	users.GET("/all", handlers.GetAllUsers)
-	users.GET(":id", handlers.GetUserByID)
+	users.GET("/:id", handlers.GetUserByID)
 }
