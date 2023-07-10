@@ -1,0 +1,36 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" opened class="w-1/5 bg-green-500 dark:bg-green-900">
+    <div class="my-5 text-2xl text-center dark:text-white">
+      Cashflow Tracker
+    </div>
+
+    <ul class="flex flex-col items-center justify-center">
+      <li
+        class="w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
+        routerLink="/dashboard"
+      >
+        Dashboard
+      </li>
+
+      <li
+        class="w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
+        routerLink="/profile"
+      >
+        Profile
+      </li>
+
+      <li
+        class="w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
+        routerLink="/settings"
+      >
+        Settings
+      </li>
+    </ul>
+  </mat-drawer>
+
+  <mat-drawer-content class="w-4/5 dark:bg-vs">
+    <p class="mt-20 text-3xl text-center dark:text-white">
+      Router outlets here
+    </p>
+  </mat-drawer-content>
+</mat-drawer-container>

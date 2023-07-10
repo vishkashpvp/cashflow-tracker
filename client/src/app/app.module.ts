@@ -6,12 +6,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 // Other App Imports
 import { environment } from 'src/environments/environment';
@@ -48,7 +50,7 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, SigninComponent, HomeComponent],
+  declarations: [AppComponent, SigninComponent, HomeComponent, LayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -57,6 +59,7 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
     GoogleSigninButtonModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatSidenavModule,
   ],
   providers: [
     { provide: 'HTTP_INTERCEPTORS', useClass: AuthInterceptor, multi: true },
