@@ -14,6 +14,9 @@ import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 // Other App Imports
 import { environment } from 'src/environments/environment';
@@ -50,7 +53,15 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, SigninComponent, HomeComponent, LayoutComponent],
+  declarations: [
+    AppComponent,
+    SigninComponent,
+    HomeComponent,
+    LayoutComponent,
+    DashboardComponent,
+    ProfileComponent,
+    SettingsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

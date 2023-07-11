@@ -8,6 +8,7 @@
       <li
         class="flex w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
         routerLink="/dashboard"
+        routerLinkActive="bg-green-900 text-white dark:bg-green-500 dark:text-black"
       >
         <mat-icon class="mr-3" fontIcon="dashboard"></mat-icon>
         Dashboard
@@ -15,6 +16,7 @@
       <li
         class="flex w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
         routerLink="/profile"
+        routerLinkActive="bg-green-900 text-white dark:bg-green-500 dark:text-black"
       >
         <mat-icon class="mr-3" fontIcon="person"></mat-icon>
         Profile
@@ -22,6 +24,7 @@
       <li
         class="flex w-5/6 p-3 mb-3 cursor-pointer rounded-2xl hover:bg-green-900 hover:text-white dark:text-white dark:hover:bg-green-500 dark:hover:text-black"
         routerLink="/settings"
+        routerLinkActive="bg-green-900 text-white dark:bg-green-500 dark:text-black"
       >
         <mat-icon class="mr-3" fontIcon="settings"></mat-icon>
         Settings
@@ -30,8 +33,8 @@
   </mat-drawer>
 
   <mat-drawer-content class="w-4/5 dark:bg-vs">
-    <p class="mt-20 text-3xl text-center dark:text-white">
-      Router outlets here
-    </p>
+    <div class="mt-20 text-3xl text-center dark:text-white">
+      <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>
