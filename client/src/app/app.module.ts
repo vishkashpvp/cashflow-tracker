@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule } from '@angular/forms';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
@@ -71,6 +73,8 @@ const socialAuthServiceConfig: SocialAuthServiceConfig = {
     BrowserAnimationsModule,
     MatIconModule,
     MatSidenavModule,
+    MatDividerModule,
+    FormsModule,
   ],
   providers: [
     { provide: 'HTTP_INTERCEPTORS', useClass: AuthInterceptor, multi: true },

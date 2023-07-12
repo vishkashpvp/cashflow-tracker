@@ -1,1 +1,17 @@
-<p>settings works!</p>
+<h1 class="mb-3 text-3xl">Settings</h1>
+
+<mat-divider class="bg-green-900 dark:bg-green-500"></mat-divider>
+
+<div class="mt-5">
+  <div class="flex items-center justify-between text-lg">
+    <p>Change App Theme</p>
+    <select
+      [(ngModel)]="selectedThemeOption"
+      class="w-32 px-4 py-2 leading-tight bg-white rounded appearance-none cursor-pointer focus:outline-none hover:ring-1 hover:ring-green-900 dark:bg-vs dark:hover:ring-green-500"
+      (change)="themeToggle()"
+    >
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+</div>

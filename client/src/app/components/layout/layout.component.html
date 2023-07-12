@@ -32,9 +32,13 @@
     </ul>
   </mat-drawer>
 
-  <mat-drawer-content class="w-4/5 dark:bg-vs">
-    <div class="mt-20 text-3xl text-center dark:text-white">
-      <router-outlet></router-outlet>
+  <mat-drawer-content class="w-4/5 bg-white dark:bg-vs dark:text-white">
+    <div class="flex flex-col h-full">
+      <div
+        class="flex-grow h-full p-5 m-5 border border-green-900 rounded dark:border-green-500"
+      >
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
