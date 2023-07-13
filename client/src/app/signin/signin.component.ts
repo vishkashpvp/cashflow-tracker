@@ -53,6 +53,7 @@ export class SigninComponent implements OnInit {
       next: (response: SigninResponse) => {
         this.loggedIn = true;
         this.localStorageService.setAuthToken(response.token);
+        this.localStorageService.setCurrentUser(response.user);
         this.router.navigate(['/']);
       },
       error: (err) => {

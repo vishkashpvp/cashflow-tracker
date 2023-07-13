@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Theme } from '../enums/Theme';
 import { LocalStorageKeys } from 'src/constants/LocalStorageKeys';
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -39,5 +40,14 @@ export class LocalStorageService {
   }
   getAuthToken(): string | null {
     return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN) || null;
+  }
+
+  // USER
+  setCurrentUser(user: User) {
+    localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
+  }
+  getCurrentUser(): User | null {
+    const userVal = localStorage.getItem(LocalStorageKeys.USER);
+    return userVal ? (JSON.parse(userVal) as User) : null;
   }
 }

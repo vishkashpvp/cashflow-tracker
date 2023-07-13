@@ -1,1 +1,33 @@
-<p>profile works!</p>
+<h1 class="mb-3 text-3xl">Profile</h1>
+
+<mat-divider class="bg-green-900 dark:bg-green-500"></mat-divider>
+
+<div class="py-2">
+  <div class="grid gap-5 mt-5 grid-rows1 xl:grid-cols-2 2xl:grid-cols-3">
+    <div class="p-4 rounded ring-1 ring-green-900 dark:ring-green-500">
+      <h1 class="mb-6 text-xl">Basic info</h1>
+      <h3 class="p-2 rounded hover:bg-green-100 dark:hover:bg-green-800">
+        NAME: {{ currentUser?.name }}
+      </h3>
+    </div>
+
+    <div class="p-4 rounded ring-1 ring-green-900 dark:ring-green-500">
+      <h1 class="mb-6 text-xl">Contact info</h1>
+      <h3 class="p-2 rounded hover:bg-green-100 dark:hover:bg-green-800">
+        EMAIL: {{ currentUser?.email }}
+      </h3>
+    </div>
+
+    <div
+      class="p-4 rounded ring-1 xl:col-span-2 2xl:col-span-1 ring-green-900 dark:ring-green-500"
+    >
+      <h1 class="mb-6 text-xl">Other info</h1>
+      <h3 class="p-2 mb-1 rounded hover:bg-green-100 dark:hover:bg-green-800">
+        JOINED: {{ currentUser?.createdAt | date }}
+      </h3>
+      <h3 class="p-2 rounded hover:bg-green-100 dark:hover:bg-green-800">
+        ACCOUNT LINKED: {{ currentUser?.provider | titlecase }}
+      </h3>
+    </div>
+  </div>
+</div>
