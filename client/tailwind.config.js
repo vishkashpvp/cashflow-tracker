@@ -12,6 +12,7 @@ module.exports = {
       gray: colors.gray,
       yellow: colors.yellow,
       purple: colors.purple,
+      red: colors.red,
       green: colors.green,
       blue: colors.blue,
       vs: "#242424",
