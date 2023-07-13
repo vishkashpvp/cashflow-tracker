@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Theme } from './enums/Theme';
 import { LocalStorageService } from './services/local-storage.service';
 
@@ -7,7 +7,7 @@ import { LocalStorageService } from './services/local-storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'cashflow-tracker-client';
   isDarkTheme: boolean = false;
   html: HTMLElement;
@@ -17,16 +17,21 @@ export class AppComponent {
     private localStorageService: LocalStorageService
   ) {
     this.html = document.documentElement;
-    this.isDarkTheme = this.localStorageService.getTheme() === Theme.DARK;
+    this.isDarkTheme = this.localStorageService.isDarkTheme();
     this.applyTheme();
+  }
+
+  ngOnInit(): void {
+    this.localStorageService._isDarkTheme.subscribe((_isDarkTheme: boolean) => {
+      this.isDarkTheme = _isDarkTheme;
+      this.applyTheme();
+    });
   }
 
   toggleTheme() {
     this.isDarkTheme = !this.isDarkTheme;
     this.applyTheme();
-    this.localStorageService.setTheme(
-      this.isDarkTheme ? Theme.DARK : Theme.LIGHT
-    );
+    this.localStorageService.setDarkTheme(this.isDarkTheme);
   }
 
   applyTheme() {

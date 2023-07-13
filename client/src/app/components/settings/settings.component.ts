@@ -13,11 +13,11 @@ export class SettingsComponent {
 
   constructor(private localStorageService: LocalStorageService) {
     this.selectedTheme = this.localStorageService.getTheme();
-    this.selectedThemeOption = this.selectedTheme.toLocaleLowerCase();
+    this.selectedThemeOption = this.selectedTheme.toLowerCase();
   }
 
   themeToggle() {
     const isDark = this.selectedThemeOption.toLowerCase() === Theme.DARK;
-    this.localStorageService.setTheme(isDark ? Theme.DARK : Theme.LIGHT);
+    this.localStorageService.setDarkTheme(isDark);
   }
 }
