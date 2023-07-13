@@ -55,7 +55,7 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
-	c.JSON(respStatus, gin.H{"token": token, "user": user})
+	c.JSON(respStatus, gin.H{"status": respStatus, "token": token, "user": user})
 }
 
 func getUserInfo(provider, idToken, accessToken string) (*models.User, error) {
