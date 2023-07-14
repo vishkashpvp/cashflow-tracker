@@ -13,7 +13,7 @@ func GetCorsConfig() cors.Config {
 
 	config := cors.DefaultConfig()
 	config.AllowOrigins = allowedOrigins
-	config.AllowHeaders = append(config.AllowHeaders, "x-idtoken", "x-provider", "x-accesstoken")
+	config.AllowHeaders = append(config.AllowHeaders, "authorization", "x-idtoken", "x-provider", "x-accesstoken")
 
 	return config
 }
