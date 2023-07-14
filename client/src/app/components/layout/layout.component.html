@@ -1,5 +1,10 @@
 <mat-drawer-container>
-  <mat-drawer mode="side" opened class="w-1/5 bg-green-500 dark:bg-green-900">
+  <mat-drawer
+    [mode]="isMobileScreen ? 'over' : 'side'"
+    [(opened)]="isDrawerOpen"
+    class="w-1/5 bg-green-500 dark:bg-green-900"
+    [ngClass]="{ 'w-3/4': isMobileScreen }"
+  >
     <div class="my-5 text-2xl text-center dark:text-white">
       Cashflow Tracker
     </div>
@@ -32,7 +37,16 @@
     </ul>
   </mat-drawer>
 
-  <mat-drawer-content class="w-4/5 bg-white dark:bg-vs dark:text-white">
+  <mat-drawer-content class="bg-white dark:bg-vs dark:text-white">
+    <div
+      class="fixed p-2 ml-2 text-white bg-green-900 rounded-full cursor-pointer bottom-2 dark:text-black dark:bg-green-500"
+    >
+      <mat-icon
+        [fontIcon]="isDrawerOpen ? 'chevron_left' : 'chevron_right'"
+        (click)="toggleDrawer()"
+      ></mat-icon>
+    </div>
+
     <div class="flex flex-col h-full">
       <div
         class="flex-grow h-full p-5 m-5 border border-green-900 rounded dark:border-green-500"
